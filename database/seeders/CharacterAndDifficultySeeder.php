@@ -17,17 +17,17 @@ class CharacterAndDifficultySeeder extends Seeder
         $characters = [
             [
                 'name' => 'Froggorz',
-                'image_url' => asset('assets/monster1r.png'),
+                'image_url' => 'assets/monster1r.png',
                 'is_boss' => true,
             ],
             [
                 'name' => 'Wolvid',
-                'image_url' => asset('assets/monster2r.png'),
+                'image_url' => 'assets/monster2r.png',
                 'is_boss' => true,
             ],
             [
                 'name' => 'Mushribs',
-                'image_url' => asset('assets/monster3r.png'),
+                'image_url' => 'assets/monster3r.png',
                 'is_boss' => true,
             ],
         ];
@@ -50,22 +50,22 @@ class CharacterAndDifficultySeeder extends Seeder
         $characters = [
             [
                 'name' => 'The Sprinter',
-                'image_url' => asset('assets/char1.png'),
+                'image_url' => 'assets/char1.png',
                 'is_boss' => false,
             ],
             [
                 'name' => 'The Flow Seeker',
-                'image_url' => asset('assets/char2.png'),
+                'image_url' => 'assets/char2.png',
                 'is_boss' => false,
             ],
             [
                 'name' => 'The Challenger',
-                'image_url' => asset('assets/char4.png'),
+                'image_url' => 'assets/char4.png',
                 'is_boss' => false,
             ],
             [
                 'name' => 'The Visionary',
-                'image_url' => asset('assets/char5.png'),
+                'image_url' => 'assets/char5.png',
                 'is_boss' => false,
             ],
         ];

@@ -5,7 +5,6 @@ use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Project\TaskController;
 use App\Http\Controllers\Projects\ProjectController;
-use App\Models\Character;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -13,6 +12,13 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
+Route::get('/home', function () {
+    return Inertia::render('home/index');
+})->name('home.authenticated');
+
+Route::get('/project/1', function () {
+    return Inertia::render('project-detail');
+})->name('project.detail');
 
 // Authentication
 Route::middleware('guest')->group(function () {
@@ -30,6 +36,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('store', [ProjectController::class, 'store'])->name('store');
         Route::put('{project}/update', [ProjectController::class, 'update'])->name('update');
         Route::delete('{project}/delete', [ProjectController::class, 'destroy'])->name('destroy');
+
+        Route::post('{project}/mark_done', [ProjectController::class, 'markAsDone'])->name('mark_as_done');
 
         Route::prefix('attachments')->name('attachment.')->group(function () {
             Route::post('{project}/store', [ProjectController::class, 'addAttachment'])->name('store');
