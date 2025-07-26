@@ -111,4 +111,9 @@ class ProjectController extends Controller
 
         return back()->with('success', 'The quest has marked as done!');
     }
+
+    public function getProjectCollaborators(Project $project)
+    {
+        return $project->collaborators()->get() ?? [];
+    }
 }
