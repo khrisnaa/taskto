@@ -21,7 +21,6 @@ return new class extends Migration
             $table->text('description');
             $table->dateTime('due_date')->nullable();
             $table->string('salt')->nullable();
-            $table->integer('health')->default(550);
             $table->enum('difficulty', [
                 ProjectDifficulty::Easy->value,
                 ProjectDifficulty::Medium->value,
