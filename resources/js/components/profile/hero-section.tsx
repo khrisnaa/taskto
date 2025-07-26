@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { baseName } from '@/lib/validators/base';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { Sparkle } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -25,6 +25,7 @@ const Separator = ({ className = '' }) => <div className={`h-px bg-gray-200 ${cl
 
 const HeroSection = () => {
     const [loading, setLoading] = useState(false);
+    const data = usePage().props;
 
     const form = useForm<UserSetupFormData>({
         resolver: zodResolver(userSetupSchema),
@@ -156,7 +157,7 @@ const HeroSection = () => {
                         <div className="flex flex-col space-y-2 space-x-2 md:flex-row">
                             <div className="flex gap-x-2">
                                 Is this you?
-                                <p className="underline">agung@eivern.com,</p>
+                                <p className="underline">{data.auth.user.email ?? 'ic@eivern.com'},</p>
                             </div>
                             <div className="space-x-2">
                                 If it’s not{' '}

@@ -7,17 +7,18 @@ use App\Models\Project;
 use App\Models\ProjectAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class ProjectController extends Controller
 {
     public function index()
     {
-        // 
+        return Inertia::render('project');
     }
 
     public function create()
     {
-        // 
+        //
     }
 
     public function store(Request $request)
@@ -46,7 +47,7 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        // 
+        //
     }
 
     public function update(Request $request, Project $project)
