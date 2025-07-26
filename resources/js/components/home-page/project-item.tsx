@@ -14,15 +14,15 @@ export const ProjectItem = ({ project }: ProjectItemProps) => {
     // Format tanggal
     const formattedDate = project.due_date
         ? new Date(project.due_date).toLocaleDateString('en-GB', {
-              day: '2-digit',
-              month: 'short',
-              year: 'numeric',
-          })
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+        })
         : 'No deadline';
 
     return (
         <div
-            onClick={() => router.visit(`/project/${project.id}`)}
+            onClick={() => router.visit(`/projects`)}
             onMouseEnter={() => setIsActive(true)}
             onMouseLeave={() => setIsActive(false)}
             className="group relative flex cursor-pointer flex-col justify-between gap-4 pb-4 md:flex-row"

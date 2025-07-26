@@ -5,6 +5,8 @@ use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Project\TaskController;
 use App\Http\Controllers\Projects\ProjectController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -13,7 +15,16 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/home', function () {
-    return Inertia::render('home/index');
+    $user = User::findOrFail(Auth::user()->id);
+
+    $projects = $user->projects()->get();
+    $sharedProjects = $user->sharedProjects()->get();
+
+
+    return Inertia::render('home/index', [
+        'projects' => $projects,
+        'sharedProjects' => $sharedProjects
+    ]);
 })->name('home.authenticated');
 
 Route::get('/project/1', function () {
