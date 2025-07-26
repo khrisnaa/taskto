@@ -19,7 +19,7 @@ export default function Welcome() {
                     <div className="flex-[1]">
                         <div className="flex flex-col text-6xl font-semibold">The spark of idea</div>
                         <div className="relative flex h-[70dvh] w-full items-center justify-center overflow-hidden">
-                            <div className="relative scale-125 overflow-hidden">
+                            <div className="relative overflow-hidden">
                                 <img src="/assets/monster2-white.png" alt="Monster" className="h-full w-full object-cover" />
                             </div>
                         </div>
