@@ -1,11 +1,14 @@
 import { Calendar, Check, Circle } from 'lucide-react';
 import { motion } from 'motion/react';
 
-interface Task {
+export interface Task {
     id: number;
-    name: string;
+    title: string;
     desc: string;
     complete: boolean;
+    deadline: string;
+    assignedTo: number;
+    attachment?: string | null;
 }
 
 interface TaskItemProps {
@@ -21,7 +24,7 @@ export const TaskItem = ({ task, onToggle }: TaskItemProps) => {
                     {task.complete ? <Check /> : <Circle />}
                 </div>
                 <div className="max-w-xs">
-                    <h4 className="text-sm font-medium md:text-lg">{task.name}</h4>
+                    <h4 className="text-sm font-medium md:text-lg">{task.title}</h4>
                     <p className="text-sm text-neutral-600 transition-all duration-500 group-hover:translate-x-2">{task.desc}</p>
                 </div>
             </div>

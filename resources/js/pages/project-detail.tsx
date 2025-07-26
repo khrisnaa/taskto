@@ -1,47 +1,74 @@
 import { TaskItem } from '@/components/project/task-item';
+import { TaskModal } from '@/components/project/task-modal';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Check, Plus } from 'lucide-react';
 import { useState } from 'react';
-const TASKS = [
+
+export const USERS = [
+    { id: 1, name: 'Ayu' },
+    { id: 2, name: 'Budi' },
+    { id: 3, name: 'Citra' },
+    { id: 4, name: 'Dewi' },
+];
+
+export const TASKS = [
     {
         id: 1,
-        name: 'Design landing page',
+        title: 'Design landing page',
         desc: 'Create a responsive landing page using Tailwind CSS',
         complete: false,
+        deadline: '2025-08-01',
+        assignedTo: 1, // Ayu
+        attachment: null,
     },
     {
         id: 2,
-        name: 'Fix login bug',
+        title: 'Fix login bug',
         desc: 'Resolve login redirect issue on Safari browser',
         complete: true,
+        deadline: '2025-07-30',
+        assignedTo: 2, // Budi
+        attachment: 'bug_report.png',
     },
     {
         id: 3,
-        name: 'Update user profile API',
+        title: 'Update user profile API',
         desc: 'Add phone number field and validation to the update endpoint',
         complete: false,
+        deadline: '2025-08-03',
+        assignedTo: 3, // Citra
+        attachment: null,
     },
     {
         id: 4,
-        name: 'Write documentation',
+        title: 'Write documentation',
         desc: 'Document setup instructions and API routes',
         complete: true,
+        deadline: '2025-07-28',
+        assignedTo: 4, // Dewi
+        attachment: 'docs.pdf',
     },
     {
         id: 5,
-        name: 'Deploy to staging',
+        title: 'Deploy to staging',
         desc: 'Push latest changes to the staging environment for testing',
         complete: false,
+        deadline: '2025-08-05',
+        assignedTo: 1, // Ayu
+        attachment: null,
     },
 ];
 
-interface Task {
+export interface Task {
     id: number;
-    name: string;
+    title: string;
     desc: string;
     complete: boolean;
+    deadline: string;
+    assignedTo: number;
+    attachment?: string | null;
 }
 
 const ProjectDetail = () => {
@@ -59,10 +86,7 @@ const ProjectDetail = () => {
                         <Check className="size-4" />
                         Mark As Done
                     </Button>
-                    <Button>
-                        <Plus className="size-4" />
-                        New Task
-                    </Button>
+                    <TaskModal />
                 </div>
             </section>
             <section className="flex w-full flex-col gap-8 md:flex-row md:gap-16">
