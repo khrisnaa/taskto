@@ -5,7 +5,6 @@ use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Project\TaskController;
 use App\Http\Controllers\Projects\ProjectController;
-use App\Models\Character;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -13,6 +12,9 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
+Route::get('/home', function () {
+    return Inertia::render('home/index');
+})->name('home.authenticated');
 
 Route::get('/project/1', function () {
     return Inertia::render('project-detail');
