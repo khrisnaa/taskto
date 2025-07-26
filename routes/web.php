@@ -42,9 +42,9 @@ Route::middleware(['auth',])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 
-    Route::prefix('projects')->name('project.')->group(function () {
-        Route::post('create', [])->name('create');
-    });
+    // Route::prefix('projects')->name('project.')->group(function () {
+    //     Route::post('create', [])->name('create');
+    // });
 });
 
 require __DIR__ . '/settings.php';
