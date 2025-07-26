@@ -18,6 +18,10 @@ Route::get('/project', function () {
     return Inertia::render('project');
 })->name('project');
 
+Route::get('/project/1', function () {
+    return Inertia::render('project-detail');
+})->name('project.detail');
+
 // Authentication
 Route::middleware('guest')->group(function () {
     Route::get('auth/redirect', [SocialiteController::class, 'redirect'])->name('google.redirect');
