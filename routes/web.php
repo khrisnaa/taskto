@@ -43,6 +43,8 @@ Route::middleware(['auth'])->group(function () {
         Route::put('{task}/update', [TaskController::class, 'update'])->name('update');
         Route::delete('{task}/delete', [TaskController::class, 'destroy'])->name('destroy');
 
+        Route::post('{task}/status/update', [TaskController::class, 'changeStatus'])->name('changeStatus');
+
         Route::prefix('attachments')->name('attachment.')->group(function () {
             Route::post('{task}/store', [TaskController::class, 'addAttachment'])->name('store');
             Route::delete('{task}/delete', [TaskController::class, 'deleteAttachment'])->name('delete');
