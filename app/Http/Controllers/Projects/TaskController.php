@@ -13,6 +13,11 @@ use Illuminate\Validation\Rule;
 
 class TaskController extends Controller
 {
+    public function create()
+    {
+        // 
+    }
+
     public function store(Request $request, Project $project)
     {
         $validatedData = $request->validate([
