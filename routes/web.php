@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\Project\TaskController;
 use App\Http\Controllers\Projects\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,6 +33,18 @@ Route::middleware(['auth',])->group(function () {
         Route::prefix('attachments')->name('attachment.')->group(function () {
             Route::post('{project}/store', [ProjectController::class, 'addAttachment'])->name('store');
             Route::delete('{project}/delete', [ProjectController::class, 'deleteAttachment'])->name('delete');
+        });
+    });
+
+    Route::prefix('tasks')->name('task.')->group(function () {
+        Route::get('create', [TaskController::class, 'create'])->name('create');
+        Route::post('{project}/store', [TaskController::class, 'store'])->name('store');
+        Route::put('{task}/update', [TaskController::class, 'update'])->name('update');
+        Route::delete('{task}/delete', [TaskController::class, 'destroy'])->name('destroy');
+
+        Route::prefix('attachments')->name('attachment.')->group(function () {
+            Route::post('{task}/store', [TaskController::class, 'addAttachment'])->name('store');
+            Route::delete('{task}/delete', [TaskController::class, 'deleteAttachment'])->name('delete');
         });
     });
 });
