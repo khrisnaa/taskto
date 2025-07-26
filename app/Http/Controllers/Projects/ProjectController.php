@@ -86,9 +86,13 @@ class ProjectController extends Controller
             'file' => 'required|mimes:pdf,xlx,csv|max:15024',
         ]);
 
-        $fileName = time() . '.' . $request->file->gethostname() . '.' . $request->file->extensions();
+        $fileName = public_path('project/attachments/') . time() . '.' . $request->file->gethostname() . '.' . $request->file->extensions();
 
-        $request->file->move(public_path('project/attachments'), $fileName);
+        $request->file->move($fileName);
+
+        $project->attachments()->create([
+            'url' => $fileName,
+        ]);
 
         return back()->with('success', 'Attacment added successfully!');
     }

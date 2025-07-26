@@ -7,17 +7,17 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class CharacterController extends Controller
 {
     public function index()
     {
         $characters = Character::where('is_boss', false)->get();
-        $bosses = Character::where('is_boss', true)->get();
 
-        Log::info('Characters', ['characters' => $characters, 'bosses' => $bosses]);
-
-        return null;
+        return Inertia::render('profile', [
+            'characters' => $characters,
+        ]);
     }
 
     public function show(Character $character)
