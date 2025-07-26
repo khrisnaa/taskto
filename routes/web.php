@@ -12,6 +12,10 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
+Route::get('/profile', function () {
+    return Inertia::render('profile');
+})->name('profile');
+
 // Authentication
 Route::middleware('guest')->group(function () {
     Route::get('auth/redirect', function () {
@@ -42,7 +46,6 @@ Route::middleware(['auth',])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
-
     Route::prefix('projects')->name('project.')->group(function () {
         Route::get('index', [ProjectController::class, 'index'])->name('index');
         Route::get('create', [ProjectController::class, 'create'])->name('create');
