@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\Projects\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -9,9 +10,7 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
-Route::get('/profile', function () {
-    return Inertia::render('profile');
-})->name('profile');
+Route::get('/profile', [CharacterController::class, 'index'])->name('profile');
 
 // Authentication
 Route::middleware('guest')->group(function () {
