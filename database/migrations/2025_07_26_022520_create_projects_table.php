@@ -13,19 +13,22 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('difficulties', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->foreignId('character_id')->constrained();
+            $table->double('multiplier')->default(0.5);
+            $table->timestamps();
+        });
+
         Schema::create('projects', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignId('character_id')->constrained('characters');
+            $table->foreignId('difficulty_id')->constrained('difficulties');
             $table->foreignId('user_id')->constrained('users');
             $table->string('title');
             $table->text('description');
             $table->dateTime('due_date')->nullable();
             $table->string('salt')->nullable();
-            $table->enum('difficulty', [
-                ProjectDifficulty::Easy->value,
-                ProjectDifficulty::Medium->value,
-                ProjectDifficulty::Hard->value
-            ])->default(ProjectDifficulty::Easy->value);
             $table->boolean('is_finished')->default(false);
             $table->boolean('is_public')->default(false);
             $table->timestamps();
@@ -33,14 +36,14 @@ return new class extends Migration
 
         Schema::create('project_attachments', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('project_id')->constrained('projects');
+            $table->foreignUuid('project_id')->constrained('projects')->cascadeOnDelete();
             $table->string('url');
             $table->timestamps();
         });
 
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('project_id')->constrained('projects');
+            $table->foreignUuid('project_id')->constrained('projects')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('assignee_id')->constrained('users');
             $table->string('title');
@@ -57,7 +60,7 @@ return new class extends Migration
 
         Schema::create('task_attachments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('task_id')->constrained('tasks');
+            $table->foreignId('task_id')->constrained('tasks')->cascadeOnDelete();
             $table->string('url');
             $table->timestamps();
         });
@@ -68,6 +71,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('difficulties');
         Schema::dropIfExists('projects');
         Schema::dropIfExists('project_attachments');
         Schema::dropIfExists('tasks');

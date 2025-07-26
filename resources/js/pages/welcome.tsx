@@ -33,6 +33,7 @@ export default function Welcome() {
                         <FAQ />
                     </div>
                 </div>
+                <Footer />
             </section>
             <Footer />
         </div>
