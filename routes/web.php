@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Project\TaskController;
 use App\Http\Controllers\Projects\ProjectController;
 use Illuminate\Support\Facades\Route;
@@ -11,11 +12,6 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
-// Route Home Page atur lagi dah nanti kasi auth ngok
-Route::get('/home', function () {
-    return Inertia::render('home/index');
-})->name('home.authenticated');
-
 Route::get('/profile', [CharacterController::class, 'index'])->name('profile');
 
 // Authentication
@@ -24,13 +20,15 @@ Route::middleware('guest')->group(function () {
     Route::get('auth/callback', [SocialiteController::class, 'callback'])->name('google.callback');
 });
 
-Route::middleware(['auth',])->group(function () {
+Route::middleware(['auth'])->group(function () {
+    Route::get('auth/logout', [SocialiteController::class, 'destroy'])->name('logout');
     Route::get('dashboard', function () {
         return Inertia::render('profile');
     })->name('dashboard');
     Route::prefix('projects')->name('project.')->group(function () {
         Route::get('index', [ProjectController::class, 'index'])->name('index');
         Route::get('create', [ProjectController::class, 'create'])->name('create');
+        Route::get('{project}/show', [ProjectController::class, 'show'])->name('show');
         Route::post('store', [ProjectController::class, 'store'])->name('store');
         Route::put('{project}/update', [ProjectController::class, 'update'])->name('update');
         Route::delete('{project}/delete', [ProjectController::class, 'destroy'])->name('destroy');
@@ -51,6 +49,10 @@ Route::middleware(['auth',])->group(function () {
             Route::post('{task}/store', [TaskController::class, 'addAttachment'])->name('store');
             Route::delete('{task}/delete', [TaskController::class, 'deleteAttachment'])->name('delete');
         });
+    });
+
+    Route::prefix('profile')->name('profile.')->group(function () {
+        Route::post('update', [ProfileController::class, 'update'])->name('update');
     });
 });
 
