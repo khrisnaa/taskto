@@ -101,7 +101,7 @@ const ProjectDetail = () => {
                 <div className="flex flex-col justify-between gap-0 md:flex-row md:gap-8">
                     <div className="relative flex items-center justify-center overflow-hidden">
                         <div className="relative aspect-square h-[40dvh] -translate-y-[10%] md:aspect-[3/3] md:h-[80dvh] md:-translate-y-[20%]">
-                            <img src="/assets/monster3.png" className="h-full w-full scale-x-[-1] object-cover object-top" />
+                            <img src={project.difficulty.character.image_url} className="h-full w-full scale-x-[-1] object-cover object-top" />
                         </div>
                     </div>
 

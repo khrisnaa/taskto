@@ -15,13 +15,14 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/home', function () {
-    $user = User::findOrFail(Auth::user()->id);
+    $user = User::with('character')->findOrFail(Auth::user()->id);
 
     $projects = $user->projects()->get();
     $sharedProjects = $user->sharedProjects()->get();
 
 
     return Inertia::render('home/index', [
+        'user' => $user,
         'projects' => $projects,
         'sharedProjects' => $sharedProjects
     ]);

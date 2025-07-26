@@ -8,7 +8,7 @@ import { usePage } from '@inertiajs/react';
 import { Plus } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
-import {Project} from '@/types/index'
+import { Project } from '@/types/index'
 
 const FILTERS = [
     { key: 'all', label: 'All Project' },
@@ -22,12 +22,12 @@ interface SelectedState {
 }
 
 interface PageProps {
-  projects: Project[];
+    projects: Project[];
 }
 
 const Index = () => {
-    
-    const { projects = []} = usePage<PageProps>().props;
+
+    const { projects = [], user } = usePage<PageProps>().props;
     const [selected, setSelected] = useState<SelectedState>({ active: false, key: 'all' });
 
     const filteredProjects = projects
@@ -47,7 +47,7 @@ const Index = () => {
         <div className="flex min-h-screen flex-col gap-0 overflow-hidden px-8 pt-16 md:h-screen md:flex-row md:gap-32 md:px-12">
             <section className="flex flex-[1] flex-col overflow-hidden">
                 <div className="space-y-4">
-                    <h1 className="text-4xl font-semibold">Welcome back, Dede</h1>
+                    <h1 className="text-4xl font-semibold">Welcome back, {user.name}</h1>
                     <p className="max-w-lg">
                         Ready to level up your productivity? Complete tasks, earn XP, and climb the leaderboards with your team.
                     </p>
@@ -60,7 +60,7 @@ const Index = () => {
                     </div>
                     <div className="relative flex h-full w-full max-w-md flex-col justify-center gap-6">
                         <div className="absolute -top-12 left-0 md:top-16">
-                            <h3 className="text-2xl font-semibold">The Jomock</h3>
+                            <h3 className="text-2xl font-semibold">{user.character.name}</h3>
                         </div>
 
                         <h3 className="text-5xl font-medium uppercase">Level 1</h3>
