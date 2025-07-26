@@ -7,17 +7,18 @@ use App\Models\Project;
 use App\Models\ProjectAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class ProjectController extends Controller
 {
     public function index()
     {
-        // 
+        return Inertia::render('project');
     }
 
     public function create()
     {
-        // 
+        //
     }
 
     public function store(Request $request)
@@ -46,7 +47,7 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        // 
+        //
     }
 
     public function update(Request $request, Project $project)
@@ -102,5 +103,17 @@ class ProjectController extends Controller
         unset($projectAttachment->url);
         $projectAttachment->delete();
         return back()->with('success', 'Attacment added successfully!');
+    }
+
+    public function markAsDone(Project $project)
+    {
+        $project->update(['is_finished' => true]);
+
+        return back()->with('success', 'The quest has marked as done!');
+    }
+
+    public function getProjectCollaborators(Project $project)
+    {
+        return $project->collaborators()->get() ?? [];
     }
 }

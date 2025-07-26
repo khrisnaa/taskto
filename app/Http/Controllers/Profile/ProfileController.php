@@ -22,6 +22,6 @@ class ProfileController extends Controller
 
         $user->update($validatedData);
 
-        return redirect()->route('dashboard')->with('success', 'Profile saved successfully!');
+        return redirect()->route('project')->with('success', 'Profile saved successfully!');
     }
 }

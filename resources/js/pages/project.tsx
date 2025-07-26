@@ -148,8 +148,8 @@ const UserSearchResult = ({ user, onAdd, isAdded }) => (
             onClick={() => onAdd(user)}
             disabled={isAdded}
             className={`p-2 rounded-full transition-colors ${isAdded
-                    ? 'bg-green-100 text-green-600'
-                    : 'bg-blue-100 text-blue-600 hover:bg-blue-200'
+                ? 'bg-green-100 text-green-600'
+                : 'bg-blue-100 text-blue-600 hover:bg-blue-200'
                 }`}
         >
             {isAdded ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}

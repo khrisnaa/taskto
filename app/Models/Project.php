@@ -29,7 +29,7 @@ class Project extends Model
         return $this->hasMany(Task::class);
     }
 
-    public function members(): BelongsToMany
+    public function collaborators(): BelongsToMany
     {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
