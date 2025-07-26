@@ -2,13 +2,14 @@ import { FAQ } from '@/components/blocks/faq';
 import Footer from '@/components/footer';
 import { Separator } from '@/components/ui/separator';
 import { HeroMobile } from '@/components/welcome-page/hero-mobile';
+import HeroSection from '@/components/welcome-page/hero-section';
 
 export default function Welcome() {
     // const { auth } = usePage<SharedData>().props;
 
     return (
         <div>
-            {/* <HeroSection /> */}
+            <HeroSection />
             <HeroMobile />
             <section className="min-h-screen space-y-4 bg-primary px-8 py-8 text-secondary md:px-12">
                 <div className="flex items-center justify-start">

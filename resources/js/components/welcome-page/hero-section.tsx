@@ -4,7 +4,7 @@ import { Separator } from '../ui/separator';
 
 const HeroSection = () => {
     return (
-        <section className="flex h-screen overflow-hidden bg-neutral-100 px-12">
+        <section className="hidden h-screen overflow-hidden bg-neutral-100 px-12 md:flex">
             <div className="relative flex flex-1 items-center">
                 <div className="absolute top-8 left-0 font-noto-jp text-xl font-semibold">
                     <div className="flex gap-2">

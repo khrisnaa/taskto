@@ -11,6 +11,11 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
+// Route Home Page atur lagi dah nanti kasi auth ngok
+Route::get('/home', function () {
+    return Inertia::render('home/index');
+})->name('home.authenticated');
+
 // Authentication
 Route::middleware('guest')->group(function () {
     Route::get('auth/redirect', function () {

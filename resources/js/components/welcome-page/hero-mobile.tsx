@@ -4,7 +4,7 @@ import { Separator } from '../ui/separator';
 
 export const HeroMobile = () => {
     return (
-        <div className="flex h-screen flex-col items-center gap-2 p-8 pb-0">
+        <div className="flex h-screen flex-col items-center gap-2 p-8 pb-0 md:hidden">
             <div className="flex items-center gap-2">
                 <div className="relative size-4">
                     <img src="/icons/diamonx.svg" alt="Diamond" className="h-full w-full object-cover" />
