@@ -14,14 +14,6 @@ const userSetupSchema = z.object({
 
 type UserSetupFormData = z.infer<typeof userSetupSchema>;
 
-const Input = ({ className = "", error = false, ...props }) => (
-    <input
-        className={`w-full px-3 py-2 border-b focus:outline-none transition-colors ${error ? 'border-red-500' : 'border-gray-300'
-            } ${className}`}
-        {...props}
-    />
-);
-
 const Separator = ({ className = "" }) => (
     <div className={`h-px bg-gray-200 ${className}`} />
 );

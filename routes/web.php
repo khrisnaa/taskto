@@ -5,6 +5,7 @@ use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Project\TaskController;
 use App\Http\Controllers\Projects\ProjectController;
+use App\Models\Character;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -12,11 +13,6 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
-Route::get('/profile', [CharacterController::class, 'index'])->name('profile');
-
-Route::get('/project', function () {
-    return Inertia::render('project');
-})->name('project');
 
 // Authentication
 Route::middleware('guest')->group(function () {
@@ -26,11 +22,9 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('auth/logout', [SocialiteController::class, 'destroy'])->name('logout');
-    Route::get('dashboard', function () {
-        return Inertia::render('profile');
-    })->name('dashboard');
+    Route::get('dashboard', [CharacterController::class, 'index'])->name('dashboard');
     Route::prefix('projects')->name('project.')->group(function () {
-        Route::get('index', [ProjectController::class, 'index'])->name('index');
+        Route::get('/', [ProjectController::class, 'index'])->name('index');
         Route::get('create', [ProjectController::class, 'create'])->name('create');
         Route::get('{project}/show', [ProjectController::class, 'show'])->name('show');
         Route::post('store', [ProjectController::class, 'store'])->name('store');
@@ -55,8 +49,8 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::prefix('profile')->name('profile.')->group(function () {
-        Route::post('update', [ProfileController::class, 'update'])->name('update');
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::put('update', [ProfileController::class, 'update'])->name('update');
     });
 });
 
