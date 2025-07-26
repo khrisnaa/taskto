@@ -71,7 +71,7 @@ const Index = () => {
                             </div>
                             <Progress value={80} />
                         </div>
-                        <Button>
+                        <Button onClick={() => window.location.href = route('project.index')}>
                             <Plus className="size-4" />
                             New Project
                         </Button>

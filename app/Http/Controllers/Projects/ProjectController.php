@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Projects;
 
 use App\Http\Controllers\Controller;
+use App\Models\Character;
 use App\Models\Project;
 use App\Models\ProjectAttachment;
 use Illuminate\Http\Request;
@@ -13,7 +14,11 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        return Inertia::render('project');
+        $characters = Character::where('is_boss', true)->get();
+
+        return Inertia::render('project', [
+            'characters' => $characters
+        ]);
     }
 
     public function showAll()
@@ -36,16 +41,23 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
+
         $validatedData = $request->validate([
-            'title'         => 'required|string|max:150',
-            'description'   => 'required|string',
-            'due_date'      => 'required|date_format:Y-m-d H:i:s|after_or_equal:now',
-            'character_id'  => 'required|exists:characters,id',
-            'is_public'     => 'required|in:true,false'
+            'title'         => 'required',
+            'description'   => 'required',
+            'due_date'      => 'required',
+            'character_id'  => 'required',
+            'is_public'     => 'required'
         ]);
 
+        // dd($validatedData);
+
+        $validatedData['difficulty_id'] = (int)$validatedData['character_id'];
         $validatedData['is_public']  = (bool)$validatedData['is_public'];
-        $validatedData['salt']       = str()->rand(12);
+        $validatedData['salt']       = str()->random(12);
+
+
 
         /**
          * @var App/Models/User
@@ -55,7 +67,7 @@ class ProjectController extends Controller
 
         $project = Project::create($validatedData);
 
-        return redirect()->route('project.show', ['project' => $project])->with('success', 'New boss has deployed!');
+        return redirect()->route('home.authenticated', ['project' => $project])->with('success', 'New boss has deployed!');
     }
 
     public function show(Project $project)
