@@ -11,6 +11,10 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
+Route::get('/profile', function () {
+    return Inertia::render('profile');
+})->name('profile');
+
 // Authentication
 Route::middleware('guest')->group(function () {
     Route::get('auth/redirect', function () {

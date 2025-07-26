@@ -1,6 +1,7 @@
 import { FAQ } from '@/components/blocks/faq';
+import Footer from '@/components/footer';
 import { Separator } from '@/components/ui/separator';
-import HeroSection from '@/components/welcome-page.tsx/hero-section';
+import HeroSection from '@/components/welcome/hero-section';
 
 export default function Welcome() {
     // const { auth } = usePage<SharedData>().props;
@@ -28,6 +29,7 @@ export default function Welcome() {
                         <FAQ />
                     </div>
                 </div>
+                <Footer />
             </section>
         </div>
     );
