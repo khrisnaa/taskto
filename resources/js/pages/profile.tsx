@@ -180,6 +180,7 @@ const ProfileSetupForm: React.FC = () => {
                                         {...register('name')}
                                         placeholder="Type your username"
                                         error={!!errors.name}
+                                        value={auth.user.name ?? ''}
                                         className="max-w-sm px-0 text-sm"
                                         onKeyPress={handleKeyPress}
                                     />
