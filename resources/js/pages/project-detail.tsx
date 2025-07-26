@@ -3,6 +3,7 @@ import { TaskModal } from '@/components/project/task-modal';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { usePage } from '@inertiajs/react';
 import { Check, Plus } from 'lucide-react';
 import { useState } from 'react';
 
@@ -13,53 +14,53 @@ export const USERS = [
     { id: 4, name: 'Dewi' },
 ];
 
-export const TASKS = [
-    {
-        id: 1,
-        title: 'Design landing page',
-        desc: 'Create a responsive landing page using Tailwind CSS',
-        complete: false,
-        deadline: '2025-08-01',
-        assignedTo: 1, // Ayu
-        attachment: null,
-    },
-    {
-        id: 2,
-        title: 'Fix login bug',
-        desc: 'Resolve login redirect issue on Safari browser',
-        complete: true,
-        deadline: '2025-07-30',
-        assignedTo: 2, // Budi
-        attachment: 'bug_report.png',
-    },
-    {
-        id: 3,
-        title: 'Update user profile API',
-        desc: 'Add phone number field and validation to the update endpoint',
-        complete: false,
-        deadline: '2025-08-03',
-        assignedTo: 3, // Citra
-        attachment: null,
-    },
-    {
-        id: 4,
-        title: 'Write documentation',
-        desc: 'Document setup instructions and API routes',
-        complete: true,
-        deadline: '2025-07-28',
-        assignedTo: 4, // Dewi
-        attachment: 'docs.pdf',
-    },
-    {
-        id: 5,
-        title: 'Deploy to staging',
-        desc: 'Push latest changes to the staging environment for testing',
-        complete: false,
-        deadline: '2025-08-05',
-        assignedTo: 1, // Ayu
-        attachment: null,
-    },
-];
+// export const TASKS = [
+//     {
+//         id: 1,
+//         title: 'Design landing page',
+//         desc: 'Create a responsive landing page using Tailwind CSS',
+//         complete: false,
+//         deadline: '2025-08-01',
+//         assignedTo: 1, // Ayu
+//         attachment: null,
+//     },
+//     {
+//         id: 2,
+//         title: 'Fix login bug',
+//         desc: 'Resolve login redirect issue on Safari browser',
+//         complete: true,
+//         deadline: '2025-07-30',
+//         assignedTo: 2, // Budi
+//         attachment: 'bug_report.png',
+//     },
+//     {
+//         id: 3,
+//         title: 'Update user profile API',
+//         desc: 'Add phone number field and validation to the update endpoint',
+//         complete: false,
+//         deadline: '2025-08-03',
+//         assignedTo: 3, // Citra
+//         attachment: null,
+//     },
+//     {
+//         id: 4,
+//         title: 'Write documentation',
+//         desc: 'Document setup instructions and API routes',
+//         complete: true,
+//         deadline: '2025-07-28',
+//         assignedTo: 4, // Dewi
+//         attachment: 'docs.pdf',
+//     },
+//     {
+//         id: 5,
+//         title: 'Deploy to staging',
+//         desc: 'Push latest changes to the staging environment for testing',
+//         complete: false,
+//         deadline: '2025-08-05',
+//         assignedTo: 1, // Ayu
+//         attachment: null,
+//     },
+// ];
 
 export interface Task {
     id: number;
@@ -72,7 +73,14 @@ export interface Task {
 }
 
 const ProjectDetail = () => {
+    const { tasks: TASKS, project } = usePage().props;
+
+    console.log(project);
+
+
     const [tasks, setTasks] = useState<Task[]>(TASKS);
+
+    console.log(TASKS);
 
     const toggleComplete = (id: number) => {
         setTasks((prevTasks) => prevTasks.map((task) => (task.id === id ? { ...task, complete: !task.complete } : task)));
@@ -80,7 +88,7 @@ const ProjectDetail = () => {
     return (
         <div className="gap-8 overflow-hidden p-8 md:h-screen md:p-12">
             <section className="flex flex-col justify-between gap-4 md:flex-row">
-                <h1 className="text-xl font-semibold md:text-3xl">Web Development Project</h1>
+                <h1 className="text-xl font-semibold md:text-3xl">{project.title}</h1>
                 <div className="hidden justify-between gap-4 md:flex">
                     <Button variant="secondary">
                         <Check className="size-4" />
@@ -98,8 +106,8 @@ const ProjectDetail = () => {
                     </div>
 
                     <div className="relative flex h-full w-full max-w-64 flex-col justify-center gap-4 md:gap-6">
-                        <h3 className="text-sm font-medium uppercase md:text-base">(Hard)</h3>
-                        <h3 className="text-base font-semibold uppercase md:text-2xl">Bussroom</h3>
+                        <h3 className="text-sm font-medium uppercase md:text-base">({project.difficulty.name})</h3>
+                        <h3 className="text-base font-semibold uppercase md:text-2xl">{project.difficulty.character.name}</h3>
                         <div className="space-y-2">
                             <div className="flex items-center justify-between">
                                 <p>Boss XP</p>

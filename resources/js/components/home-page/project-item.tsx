@@ -22,7 +22,7 @@ export const ProjectItem = ({ project }: ProjectItemProps) => {
 
     return (
         <div
-            onClick={() => router.visit(`/projects`)}
+            onClick={() => router.visit(route('project.show', project.id))}
             onMouseEnter={() => setIsActive(true)}
             onMouseLeave={() => setIsActive(false)}
             className="group relative flex cursor-pointer flex-col justify-between gap-4 pb-4 md:flex-row"

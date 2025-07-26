@@ -27,9 +27,6 @@ Route::get('/home', function () {
     ]);
 })->name('home.authenticated');
 
-Route::get('/project/1', function () {
-    return Inertia::render('project-detail');
-})->name('project.detail');
 
 // Authentication
 Route::middleware('guest')->group(function () {

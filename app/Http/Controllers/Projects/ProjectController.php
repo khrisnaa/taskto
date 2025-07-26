@@ -72,8 +72,14 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        //
+        $project->load(['tasks', 'difficulty.character']);
+
+        return Inertia::render('project-detail', [
+            'project' => $project,
+            'tasks' => $project->tasks
+        ]);
     }
+
 
     public function update(Request $request, Project $project)
     {
