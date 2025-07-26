@@ -34,6 +34,8 @@ Route::middleware(['auth'])->group(function () {
         Route::put('{project}/update', [ProjectController::class, 'update'])->name('update');
         Route::delete('{project}/delete', [ProjectController::class, 'destroy'])->name('destroy');
 
+        Route::post('{project}/mark_done', [ProjectController::class, 'markAsDone'])->name('mark_as_done');
+
         Route::prefix('attachments')->name('attachment.')->group(function () {
             Route::post('{project}/store', [ProjectController::class, 'addAttachment'])->name('store');
             Route::delete('{project}/delete', [ProjectController::class, 'deleteAttachment'])->name('delete');

@@ -103,4 +103,11 @@ class ProjectController extends Controller
         $projectAttachment->delete();
         return back()->with('success', 'Attacment added successfully!');
     }
+
+    public function markAsDone(Project $project)
+    {
+        $project->update(['is_finished' => true]);
+
+        return back()->with('success', 'The quest has marked as done!');
+    }
 }
