@@ -1,10 +1,10 @@
 import { ProjectItem } from '@/components/home-page/project-item';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { projects } from '@/lib/data';
 import { cn } from '@/lib/utils';
-import { Plus, Search } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
 
@@ -21,6 +21,20 @@ interface SelectedState {
 
 const Index = () => {
     const [selected, setSelected] = useState<SelectedState>({ active: false, key: 'all' });
+
+    const filteredProjects = projects
+        .filter((project) => {
+            if (selected.key === 'all') return true;
+            if (selected.key === 'ongoing') return !project.is_finished;
+            if (selected.key === 'complete') return project.is_finished;
+            return true;
+        })
+        .sort((a, b) => {
+            const dateA = new Date(a.created_at).getTime();
+            const dateB = new Date(b.created_at).getTime();
+            return dateB - dateA;
+        });
+
     return (
         <div className="flex min-h-screen flex-col gap-0 overflow-hidden px-8 pt-16 md:h-screen md:flex-row md:gap-32 md:px-12">
             <section className="flex flex-[1] flex-col overflow-hidden">
@@ -58,13 +72,13 @@ const Index = () => {
             </section>
             <section className="flex-[1]">
                 <div className="px-0 md:px-12">
-                    <div className="relative flex items-center pb-4">
+                    {/* <div className="relative flex items-center pb-4">
                         <Input
                             className="rounded-none border-x-0 border-t-0 border-b border-neutral-400 shadow-none focus:ring-0 focus-visible:ring-0"
                             placeholder="Search your project here..."
                         />
                         <Search className="absolute right-0 size-4" />
-                    </div>
+                    </div> */}
                     <div className="flex gap-8 p-4 text-sm">
                         {FILTERS.map((filter, i) => (
                             <HoverWord
@@ -79,8 +93,8 @@ const Index = () => {
                     </div>
                     <ScrollArea className="h-[80dvh] w-full pb-12">
                         <div className="flex flex-col gap-8 pt-8">
-                            {Array.from({ length: 8 }).map((_, i) => (
-                                <ProjectItem />
+                            {filteredProjects.map((project, i) => (
+                                <ProjectItem project={project} key={project.id} />
                             ))}
                         </div>
                     </ScrollArea>

@@ -16,10 +16,15 @@ Route::get('/home', function () {
     return Inertia::render('home/index');
 })->name('home.authenticated');
 
-Route::get('/project/1', function () {
-    return Inertia::render('project-detail');
-})->name('project.detail');
+Route::get('/profile', function () {
+    return Inertia::render('profile');
+})->name('profile.authenticated');
 
+Route::get('/project/{id}', function ($id) {
+    return Inertia::render('project-detail', [
+        'id' => $id,
+    ]);
+})->name('project.detail');
 // Authentication
 Route::middleware('guest')->group(function () {
     Route::get('auth/redirect', [SocialiteController::class, 'redirect'])->name('google.redirect');
