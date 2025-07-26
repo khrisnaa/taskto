@@ -16,6 +16,19 @@ class ProjectController extends Controller
         return Inertia::render('project');
     }
 
+    public function showAll()
+    {
+        /**
+         * @var App/Models/User
+         */
+        $user = Auth::user();
+
+        $projects = $user->projects()->get();
+        $sharedProjects = $user->sharedProjects()->get();
+
+        return $projects->merge($sharedProjects);
+    }
+
     public function create()
     {
         //

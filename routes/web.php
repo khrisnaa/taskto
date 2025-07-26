@@ -16,15 +16,10 @@ Route::get('/home', function () {
     return Inertia::render('home/index');
 })->name('home.authenticated');
 
-Route::get('/profile', function () {
-    return Inertia::render('profile');
-})->name('profile.authenticated');
-
-Route::get('/project/{id}', function ($id) {
-    return Inertia::render('project-detail', [
-        'id' => $id,
-    ]);
+Route::get('/project/1', function () {
+    return Inertia::render('project-detail');
 })->name('project.detail');
+
 // Authentication
 Route::middleware('guest')->group(function () {
     Route::get('auth/redirect', [SocialiteController::class, 'redirect'])->name('google.redirect');
@@ -43,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('{project}/delete', [ProjectController::class, 'destroy'])->name('destroy');
 
         Route::post('{project}/mark_done', [ProjectController::class, 'markAsDone'])->name('mark_as_done');
+        Route::get('all', [ProjectController::class, 'showAll'])->name('all');
 
         Route::prefix('attachments')->name('attachment.')->group(function () {
             Route::post('{project}/store', [ProjectController::class, 'addAttachment'])->name('store');

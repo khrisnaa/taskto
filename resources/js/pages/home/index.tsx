@@ -4,9 +4,11 @@ import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { projects } from '@/lib/data';
 import { cn } from '@/lib/utils';
+import { usePage } from '@inertiajs/react';
 import { Plus } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
+import {Project} from '@/types/index'
 
 const FILTERS = [
     { key: 'all', label: 'All Project' },
@@ -19,7 +21,13 @@ interface SelectedState {
     key: string;
 }
 
+interface PageProps {
+  projects: Project[];
+}
+
 const Index = () => {
+    
+    const { projects = []} = usePage<PageProps>().props;
     const [selected, setSelected] = useState<SelectedState>({ active: false, key: 'all' });
 
     const filteredProjects = projects
