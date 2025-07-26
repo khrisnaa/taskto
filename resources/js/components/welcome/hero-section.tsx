@@ -83,7 +83,7 @@ const HeroSection = () => {
                 <div className="flex h-full w-full items-center justify-center">
                     <div className="w-full max-w-xs space-y-4">
                         <p>With Taskto, every task is an adventure, and you’re the hero</p>
-                        <Button className="cursor-pointer">Join & Play Now</Button>
+                        <Button className="cursor-pointer" onClick={() => window.location.href = route('google.redirect')}>Join & Play Now</Button>
                     </div>
                 </div>
             </div>

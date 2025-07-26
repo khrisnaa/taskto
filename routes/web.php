@@ -20,7 +20,7 @@ Route::get('/profile', function () {
 Route::middleware('guest')->group(function () {
     Route::get('auth/redirect', function () {
         return Socialite::driver('google')->redirect();
-    });
+    })->name('google.redirect');
 
     Route::get('auth/callback', function () {
         try {
