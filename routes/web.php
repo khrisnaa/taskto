@@ -1,7 +1,11 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -13,5 +17,32 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
+// Authentication
+Route::middleware('guest')->group(function () {
+    Route::get('auth/redirect', function () {
+        return Socialite::driver('google')->redirect();
+    });
+
+    Route::get('auth/callback', function () {
+        try {
+            $googleUser = Socialite::driver('google')->user();
+
+            $user = User::updateOrCreate([
+                'email' => $googleUser->email,
+            ], [
+                'name' => $googleUser->name,
+                'avatar_url' => $googleUser->getAvatar() ?? '',
+            ]);
+
+            Auth::login($user);
+        } catch (Exception $exc) {
+            Log::error("[ Auth ] Socialite error: $exc");
+        }
+
+        return redirect('/dashboard');
+    });
+});
+
+
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';
