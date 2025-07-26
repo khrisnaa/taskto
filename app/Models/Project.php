@@ -34,8 +34,8 @@ class Project extends Model
         return $this->belongsToMany(User::class)->withTimestamps();
     }
 
-    public function getDifficulty(): string
+    public function difficulty(): BelongsTo
     {
-        return $this->difficulty?->value ?? 'Unknown';
+        return $this->belongsTo(Difficulty::class);
     }
 }
