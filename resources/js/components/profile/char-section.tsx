@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { MoveDown, Sparkle, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { baseName } from '@/lib/validators/base';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 
 const userSetupSchema = z.object({
     character: z.string().min(1, "Please select a character")
@@ -50,7 +50,10 @@ const CharacterCard = ({
             <img
                 src={imageSrc}
                 alt={`Character ${name}`}
-                className="h-auto w-96 rounded-full object-cover scale-125"
+                className="h-auto w-96 rounded-full object-cover scale-150"
+                onError={(e) => {
+                    e.currentTarget.src = '/assets/char1.png';
+                }}
             />
             {isSelected && (
                 <div className="absolute -top-3 -right-3 rounded-full bg-primary p-2">
@@ -68,29 +71,7 @@ const CharacterCard = ({
 const CharSection = () => {
     const [loading, setLoading] = useState(false);
     const [selectedCharacter, setSelectedCharacter] = useState<string>('');
-
-    const characters = [
-        {
-            id: 'strategist',
-            name: 'The Strategist',
-            imageSrc: '/assets/char3.png'
-        },
-        {
-            id: 'warrior',
-            name: 'The Warrior',
-            imageSrc: '/assets/char3.png'
-        },
-        {
-            id: 'sprinter',
-            name: 'The Sprinter',
-            imageSrc: '/assets/char3.png'
-        },
-        {
-            id: 'Kemas',
-            name: 'The strongest',
-            imageSrc: '/assets/char3.png'
-        }
-    ];
+    const data = usePage().props;
 
     const form = useForm<UserSetupFormData>({
         resolver: zodResolver(userSetupSchema),
@@ -154,12 +135,12 @@ const CharSection = () => {
                                 {/* Character Selection */}
                                 <div className="flex-1 space-y-6">
                                     <div className="flex gap-8 justify-center">
-                                        {characters.map((character) => (
+                                        {data.characters.map((character) => (
                                             <CharacterCard
                                                 key={character.id}
                                                 id={character.id}
                                                 name={character.name}
-                                                imageSrc={character.imageSrc}
+                                                imageSrc={character.image_url}
                                                 isSelected={selectedCharacter === character.id}
                                                 onClick={() => handleCharacterSelect(character.id)}
                                             />

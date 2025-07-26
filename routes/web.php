@@ -13,6 +13,10 @@ Route::get('/', function () {
 
 Route::get('/profile', [CharacterController::class, 'index'])->name('profile');
 
+Route::get('/project', function () {
+    return Inertia::render('project');
+})->name('project');
+
 // Authentication
 Route::middleware('guest')->group(function () {
     Route::get('auth/redirect', [SocialiteController::class, 'redirect'])->name('google.redirect');
