@@ -78,4 +78,17 @@ class TaskController extends Controller
         $taskAttachment->delete();
         return back()->with('success', 'Attacment added successfully!');
     }
+
+    public function changeStatus(Request $request, Task $task)
+    {
+        $validatedData = $request->validate([
+            'status' => Rule::enum(TaskStatus::class),
+        ]);
+
+        $task->update([
+            'status' => $validatedData['status'],
+        ]);
+
+        return back()->with('success', 'Task status has changed successfully!');
+    }
 }
