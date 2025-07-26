@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Projects;
 
-use App\Enums\ProjectDifficulty;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\ProjectAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
 {
@@ -27,7 +26,6 @@ class ProjectController extends Controller
             'title'         => 'required|string|max:150',
             'description'   => 'required|string',
             'due_date'      => 'required|date_format:Y-m-d H:i:s|after_or_equal:now',
-            'difficulty'    => [Rule::enum(ProjectDifficulty::class)],
             'character_id'  => 'required|exists:characters,id',
             'is_public'     => 'required|in:true,false'
         ]);
@@ -57,11 +55,48 @@ class ProjectController extends Controller
             'title'         => 'required|string|max:150',
             'description'   => 'required|string',
             'due_date'      => 'required|date_format:Y-m-d H:i:s|after_or_equal:now',
-            'difficulty'    => [Rule::enum(ProjectDifficulty::class)],
-            'character_id'  => 'required|exists:characters,id',
             'is_public'     => 'required|in:true,false'
         ]);
 
         $validatedData['is_public']  = (bool)$validatedData['is_public'];
+
+        $project->update($validatedData);
+
+        return redirect()->route('project.edit', ['project', $project])->with('success', 'The quest has been updated!');
+    }
+
+    public function destroy(Project $project)
+    {
+        /**
+         * @var App/Models/User
+         */
+        $user = Auth::user();
+
+        if ($user->id != $project->user_id) {
+            abort(403);
+        }
+
+        $project->delete();
+        return redirect()->route('project.index')->with('success', 'The quest has been deleted!');
+    }
+
+    public function addAttachment(Request $request, Project $project)
+    {
+        $validatedData = $request->validate([
+            'file' => 'required|mimes:pdf,xlx,csv|max:15024',
+        ]);
+
+        $fileName = time() . '.' . $request->file->gethostname() . '.' . $request->file->extensions();
+
+        $request->file->move(public_path('project/attachments'), $fileName);
+
+        return back()->with('success', 'Attacment added successfully!');
+    }
+
+    public function deleteAttachment(ProjectAttachment $projectAttachment)
+    {
+        unset($projectAttachment->url);
+        $projectAttachment->delete();
+        return back()->with('success', 'Attacment added successfully!');
     }
 }

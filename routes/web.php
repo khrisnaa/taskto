@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Projects\ProjectController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -43,7 +44,16 @@ Route::middleware(['auth',])->group(function () {
     })->name('dashboard');
 
     Route::prefix('projects')->name('project.')->group(function () {
-        Route::post('create', [])->name('create');
+        Route::get('index', [ProjectController::class, 'index'])->name('index');
+        Route::get('create', [ProjectController::class, 'create'])->name('create');
+        Route::post('store', [ProjectController::class, 'store'])->name('store');
+        Route::put('{project}/update', [ProjectController::class, 'update'])->name('update');
+        Route::delete('{project}/delete', [ProjectController::class, 'destroy'])->name('destroy');
+
+        Route::prefix('attachments')->name('attachment.')->group(function () {
+            Route::post('{project}/store', [ProjectController::class, 'addAttachment'])->name('store');
+            Route::delete('{project}/delete', [ProjectController::class, 'deleteAttachment'])->name('delete');
+        });
     });
 });
 
